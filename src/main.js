@@ -1,11 +1,10 @@
 import './style.scss'
-import { mount as mount1 } from './1.js'
-import { mount as mount2 } from './2.js'
-import { mount as mount3 } from './3.js'
+import { Module as Module1 } from './1.js'
+import { Module as Module2 } from './2.js'
+import { Module as Module3 } from './3.js'
 
 const app = document.getElementById('app')
 
-mount1(app)
-mount2(app)
-mount3(app)
-
+new Module1(app)
+new Module2(app)
+new Module3(app)
