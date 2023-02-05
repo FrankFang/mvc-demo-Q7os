@@ -1,44 +1,22 @@
-import { createElement } from "./helper"
-
-export class Module {
-  data = { count: 1 }
-  element = null
-  container = null
-  constructor(container) {
-    this.container = container
-    this.element = this.render()
-    this.mount()
-  }
-  render() {
-    const element = createElement(`
-      <div class="module1">
-        <h1>模块1</h1>
-        <div>${this.data.count}</div>
-        <div><button>+1</button></div>
-      </div>
-    `)
-    this.bindEvents(element)
-    return element
-  }
-  bindEvents(element) {
-    element = element || this.element
-    const button = element.querySelector('button')
-    button.addEventListener('click', () => {
-      this.data.count += 1
-      this.update()
-    })
-  }
-  mount() {
-    this.container.append(this.element)
-  }
-  update() {
-    const newElement = this.render()
-    this.element.replaceWith(newElement)
-    this.element = newElement
-  }
-}
-
-
-
-
-
+import { BaseModule } from "./base_module";
+export const module = app => new BaseModule({
+  container: app,
+  data: { count: -1 },
+  events: {
+    'click .b1': function () { this.data.count += 1; this.update() },
+    'click .b2': function () { this.data.count -= 1; this.update() },
+    'click .b3': function () { this.data.count *= 2; this.update() },
+    'click .b4': function () { this.data.count *= 3; this.update() },
+  },
+  template: `
+    <div class="module1">
+      <h1>模块1</h1>
+      <div>{{count}}</div>
+      <div><button class="b1">+1</button></div>
+      <div><button class="b2">-1</button></div>
+      <div><button class="b3">*2</button></div>
+      <div><button class="b4">*3</button></div>
+    </div>
+    }
+  `
+})
